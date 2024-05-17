@@ -77,3 +77,16 @@ C:\Users\harle\Desktop\finalsappdevsheesh-main\ENROLLMENT SYSTEM\ENROLLMENT SYST
 \\Server2\second semester 2023-2024\LAB802\79286_CC_APPSDEV22_1030_1230_PM_MW\79286-23222490\Desktop\Revise-main\ENROLLMENT SYSTEM\ENROLLMENT SYSTEM\obj\Debug\ENROLLMENT SYSTEM.csproj.CoreCompileInputs.cache
 \\Server2\second semester 2023-2024\LAB802\79286_CC_APPSDEV22_1030_1230_PM_MW\79286-23222490\Desktop\Revise-main\ENROLLMENT SYSTEM\ENROLLMENT SYSTEM\obj\Debug\ENROLLMENT SYSTEM.exe
 \\Server2\second semester 2023-2024\LAB802\79286_CC_APPSDEV22_1030_1230_PM_MW\79286-23222490\Desktop\Revise-main\ENROLLMENT SYSTEM\ENROLLMENT SYSTEM\obj\Debug\ENROLLMENT SYSTEM.pdb
+C:\Users\Home\OneDrive\Desktop\Revise-main\ENROLLMENT SYSTEM\ENROLLMENT SYSTEM\bin\Debug\ENROLLMENT SYSTEM.exe.config
+C:\Users\Home\OneDrive\Desktop\Revise-main\ENROLLMENT SYSTEM\ENROLLMENT SYSTEM\bin\Debug\ENROLLMENT SYSTEM.exe
+C:\Users\Home\OneDrive\Desktop\Revise-main\ENROLLMENT SYSTEM\ENROLLMENT SYSTEM\bin\Debug\ENROLLMENT SYSTEM.pdb
+C:\Users\Home\OneDrive\Desktop\Revise-main\ENROLLMENT SYSTEM\ENROLLMENT SYSTEM\obj\Debug\ENROLLMENT SYSTEM.csproj.AssemblyReference.cache
+C:\Users\Home\OneDrive\Desktop\Revise-main\ENROLLMENT SYSTEM\ENROLLMENT SYSTEM\obj\Debug\ENROLLMENT_SYSTEM.EnrollmentEntry.resources
+C:\Users\Home\OneDrive\Desktop\Revise-main\ENROLLMENT SYSTEM\ENROLLMENT SYSTEM\obj\Debug\ENROLLMENT_SYSTEM.Form1.resources
+C:\Users\Home\OneDrive\Desktop\Revise-main\ENROLLMENT SYSTEM\ENROLLMENT SYSTEM\obj\Debug\ENROLLMENT_SYSTEM.Menu.resources
+C:\Users\Home\OneDrive\Desktop\Revise-main\ENROLLMENT SYSTEM\ENROLLMENT SYSTEM\obj\Debug\ENROLLMENT_SYSTEM.Properties.Resources.resources
+C:\Users\Home\OneDrive\Desktop\Revise-main\ENROLLMENT SYSTEM\ENROLLMENT SYSTEM\obj\Debug\ENROLLMENT_SYSTEM.SubjectScheduleForm.resources
+C:\Users\Home\OneDrive\Desktop\Revise-main\ENROLLMENT SYSTEM\ENROLLMENT SYSTEM\obj\Debug\ENROLLMENT SYSTEM.csproj.GenerateResource.cache
+C:\Users\Home\OneDrive\Desktop\Revise-main\ENROLLMENT SYSTEM\ENROLLMENT SYSTEM\obj\Debug\ENROLLMENT SYSTEM.csproj.CoreCompileInputs.cache
+C:\Users\Home\OneDrive\Desktop\Revise-main\ENROLLMENT SYSTEM\ENROLLMENT SYSTEM\obj\Debug\ENROLLMENT SYSTEM.exe
+C:\Users\Home\OneDrive\Desktop\Revise-main\ENROLLMENT SYSTEM\ENROLLMENT SYSTEM\obj\Debug\ENROLLMENT SYSTEM.pdb

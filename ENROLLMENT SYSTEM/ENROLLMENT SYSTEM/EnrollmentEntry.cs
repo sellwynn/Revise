@@ -17,8 +17,8 @@ namespace ENROLLMENT_SYSTEM
     {
 
         //string connectionString = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source = \\Server2\second semester 2023-2024\LAB802\79286_CC_APPSDEV22_1030_1230_PM_MW\79286-23222490\Desktop\FINAL FINALLY\finalsappdevsheesh-main\PAMAYBAY.accdb";
-        //string connectionString = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\Users\harle\Desktop\finalsappdevsheesh-main\PAMAYBAY.accdb";
-        string connectionString = @"Provider = Microsoft.ACE.OLEDB.12.0; Data Source = \\Server2\second semester 2023-2024\LAB802\79286_CC_APPSDEV22_1030_1230_PM_MW\79286-23222490\Desktop\Revise-main\PAMAYBAY.accdb";
+        //string connectionString = @"Provider = Microsoft.ACE.OLEDB.12.0; Data Source = \\Server2\second semester 2023-2024\LAB802\79286_CC_APPSDEV22_1030_1230_PM_MW\79286-23222490\Desktop\Revise-main\PAMAYBAY.accdb";
+        string connectionString = @"Provider = Microsoft.ACE.OLEDB.12.0; Data Source = C:\Users\Home\OneDrive\Desktop\Revise-main\PAMAYBAY.accdb";
         int totalunits = 0;
         public EnrollmentEntry()
         {
@@ -102,8 +102,11 @@ namespace ENROLLMENT_SYSTEM
                     while (i < SummaryDataGridView.Rows.Count - 1)
                     {
                         string daysInDataGrid = SummaryDataGridView.Rows[i + 1].Cells[4].Value.ToString().ToUpper();
+                        string startInDataGrid = SummaryDataGridView.Rows[i + 1].Cells[2].Value.ToString();
+                        string endInDataGrid = SummaryDataGridView.Rows[i + 1].Cells[3].Value.ToString();
 
-                        if (IsConflict(days.ToUpper(), daysInDataGrid))
+                        if (IsConflict(days.ToUpper(), daysInDataGrid) &&
+                            IsTimeConflict(DateTime.Parse(start), DateTime.Parse(end), DateTime.Parse(startInDataGrid), DateTime.Parse(endInDataGrid)))
                         {
                             conflict = true;
                             break;
@@ -114,23 +117,8 @@ namespace ENROLLMENT_SYSTEM
 
                     if (conflict)
                     {
-                        i = SummaryDataGridView.Rows[0].Cells[0].Value != null ? -1 : 0;
-
-                        while (i < SummaryDataGridView.Rows.Count - 1)
-                        {
-                            TimeSpan startTime1 = DateTime.Parse(start).TimeOfDay;
-                            TimeSpan startTime2 = DateTime.Parse(SummaryDataGridView.Rows[i + 1].Cells[2].Value.ToString()).TimeOfDay;
-                            TimeSpan endTime1 = DateTime.Parse(end).TimeOfDay;
-                            TimeSpan endTime2 = DateTime.Parse(SummaryDataGridView.Rows[i + 1].Cells[3].Value.ToString()).TimeOfDay;
-
-                            if ((startTime1 < endTime2 && endTime1 > startTime2) || (startTime1 == startTime2 && endTime1 == endTime2))
-                            {
-                                conflict = true;
-                                break;
-                            }
-
-                            i++;
-                        }
+                        MessageBox.Show("Schedule is Conflict");
+                        return;
                     }
 
                     thisCommand.CommandText = "SELECT * FROM SUBJECTSCHEDULEFILE";
@@ -146,35 +134,38 @@ namespace ENROLLMENT_SYSTEM
                             }
                         }
                     }
-                }
 
-                if (!conflict && !closed)
-                {
-                    using (OleDbConnection thisConnection = new OleDbConnection(connectionString))
+                    if (closed)
+                    {
+                        MessageBox.Show("Schedule is Closed");
+                        return;
+                    }
+
+                    using (OleDbConnection newConnection = new OleDbConnection(connectionString))
                     {
                         bool edp = false;
-                        thisConnection.Open();
-                        OleDbCommand thisCommand = thisConnection.CreateCommand();
+                        newConnection.Open();
+                        OleDbCommand newCommand = newConnection.CreateCommand();
 
-                        thisCommand.CommandText = "SELECT * FROM SUBJECTSCHEDULEFILE";
-                        using (OleDbDataReader thisDataReader = thisCommand.ExecuteReader())
+                        newCommand.CommandText = "SELECT * FROM SUBJECTSCHEDULEFILE";
+                        using (OleDbDataReader newDataReader = newCommand.ExecuteReader())
                         {
-                            while (thisDataReader.Read())
+                            while (newDataReader.Read())
                             {
-                                if (thisDataReader["SSFEDPCODE"].ToString().Trim().ToUpper() == EDPCodeTextBox.Text.Trim().ToUpper())
+                                if (newDataReader["SSFEDPCODE"].ToString().Trim().ToUpper() == EDPCodeTextBox.Text.Trim().ToUpper())
                                 {
                                     edp = true;
                                     if (SummaryDataGridView.Rows[0].Cells[0].Value != null)
                                         SummaryDataGridView.Rows.Insert(0, new object[] { });
-                                    DateTime startTime = DateTime.Parse(thisDataReader["SSFSTARTTIME"].ToString());
-                                    DateTime endTime = DateTime.Parse(thisDataReader["SSFENDTIME"].ToString());
+                                    DateTime startTime = DateTime.Parse(newDataReader["SSFSTARTTIME"].ToString());
+                                    DateTime endTime = DateTime.Parse(newDataReader["SSFENDTIME"].ToString());
 
                                     SummaryDataGridView.Rows[0].Cells[0].Value = EDPCodeTextBox.Text.Trim().ToUpper();
-                                    SummaryDataGridView.Rows[0].Cells[1].Value = thisDataReader["SSFSUBJCODE"].ToString();
+                                    SummaryDataGridView.Rows[0].Cells[1].Value = newDataReader["SSFSUBJCODE"].ToString();
                                     SummaryDataGridView.Rows[0].Cells[2].Value = startTime.ToShortTimeString();
                                     SummaryDataGridView.Rows[0].Cells[3].Value = endTime.ToShortTimeString();
-                                    SummaryDataGridView.Rows[0].Cells[4].Value = thisDataReader["SSFDAYS"].ToString();
-                                    SummaryDataGridView.Rows[0].Cells[5].Value = thisDataReader["SSFROOM"].ToString();
+                                    SummaryDataGridView.Rows[0].Cells[4].Value = newDataReader["SSFDAYS"].ToString();
+                                    SummaryDataGridView.Rows[0].Cells[5].Value = newDataReader["SSFROOM"].ToString();
                                     break;
                                 }
                             }
@@ -186,14 +177,14 @@ namespace ENROLLMENT_SYSTEM
                             return;
                         }
 
-                        thisCommand.CommandText = "SELECT * FROM SUBJECTFILE";
-                        using (OleDbDataReader thisDataReader = thisCommand.ExecuteReader())
+                        newCommand.CommandText = "SELECT * FROM SUBJECTFILE";
+                        using (OleDbDataReader newDataReader = newCommand.ExecuteReader())
                         {
-                            while (thisDataReader.Read())
+                            while (newDataReader.Read())
                             {
-                                if (thisDataReader["SFSSUBJCODE"].ToString().Trim().ToUpper() == SummaryDataGridView.Rows[0].Cells[1].Value.ToString().Trim().ToUpper())
+                                if (newDataReader["SFSSUBJCODE"].ToString().Trim().ToUpper() == SummaryDataGridView.Rows[0].Cells[1].Value.ToString().Trim().ToUpper())
                                 {
-                                    SummaryDataGridView.Rows[0].Cells[6].Value = thisDataReader["SFSSUBJUNITS"].ToString();
+                                    SummaryDataGridView.Rows[0].Cells[6].Value = newDataReader["SFSSUBJUNITS"].ToString();
                                     break;
                                 }
                             }
@@ -202,11 +193,13 @@ namespace ENROLLMENT_SYSTEM
 
                     UpdateTotalUnits();
                 }
-                else
-                {
-                    MessageBox.Show(conflict ? "Schedule is Conflict" : "Schedule is Closed");
-                }
             }
+        }
+
+
+        private bool IsTimeConflict(DateTime start1, DateTime end1, DateTime start2, DateTime end2)
+        {
+            return start1 < end2 && end1 > start2;
         }
 
         private void UpdateTotalUnits()
@@ -227,16 +220,16 @@ namespace ENROLLMENT_SYSTEM
         private bool IsConflict(string days, string daysInDataGrid)
         {
             return days == daysInDataGrid ||
-                   (days == "MW" && (daysInDataGrid == "MON" || daysInDataGrid == "WED")) ||
-                   (daysInDataGrid == "MW" && (days == "MON" || days == "WED")) ||
-                   (days == "MWF" && (daysInDataGrid == "MON" || daysInDataGrid == "WED" || daysInDataGrid == "FRI")) ||
-                   (daysInDataGrid == "MWF" && (days == "MON" || days == "WED" || days == "FRI")) ||
-                   (days == "TTH" && (daysInDataGrid == "TUE" || daysInDataGrid == "THU")) ||
-                   (daysInDataGrid == "TTH" && (days == "TUE" || days == "THU")) ||
-                   (days == "TTHS" && (daysInDataGrid == "TUE" || daysInDataGrid == "THU" || daysInDataGrid == "SAT")) ||
-                   (daysInDataGrid == "TTHS" && (days == "TUE" || days == "THU" || days == "SAT")) ||
-                   (days == "FS" && (daysInDataGrid == "FRI" || daysInDataGrid == "SAT")) ||
-                   (daysInDataGrid == "FS" && (days == "FRI" || days == "SAT"));
+               (days == "MW" && (daysInDataGrid == "MON" || daysInDataGrid == "WED")) ||
+               (daysInDataGrid == "MW" && (days == "MON" || days == "WED")) ||
+               (days == "MWF" && (daysInDataGrid == "MON" || daysInDataGrid == "WED" || daysInDataGrid == "FRI")) ||
+               (daysInDataGrid == "MWF" && (days == "MON" || days == "WED" || days == "FRI")) ||
+               (days == "TTH" && (daysInDataGrid == "TUE" || daysInDataGrid == "THU")) ||
+               (daysInDataGrid == "TTH" && (days == "TUE" || days == "THU")) ||
+               (days == "TTHS" && (daysInDataGrid == "TUE" || daysInDataGrid == "THU" || daysInDataGrid == "SAT")) ||
+               (daysInDataGrid == "TTHS" && (days == "TUE" || days == "THU" || days == "SAT")) ||
+               (days == "FS" && (daysInDataGrid == "FRI" || daysInDataGrid == "SAT")) ||
+               (daysInDataGrid == "FS" && (days == "FRI" || days == "SAT"));
         }
 
         private void SaveButton_Click(object sender, EventArgs e)
