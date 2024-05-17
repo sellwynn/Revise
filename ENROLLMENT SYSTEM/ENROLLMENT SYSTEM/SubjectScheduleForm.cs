@@ -15,7 +15,7 @@ namespace ENROLLMENT_SYSTEM
     {
 
         //string connectionString = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=\\Server2\second semester 2023-2024\LAB802\79286_CC_APPSDEV22_1030_1230_PM_MW\79286-23222490\Desktop\FINAL\PAMAYBAY.accdb";
-        //string connectionString = @"Provider = Microsoft.ACE.OLEDB.12.0; Data Source = \\Server2\second semester 2023-2024\LAB802\79286_CC_APPSDEV22_1030_1230_PM_MW\79286-23222490\Desktop\Revise-main\PAMAYBAY.accdb";
+        //final DB string connectionString = @"Provider = Microsoft.ACE.OLEDB.12.0; Data Source = \\Server2\second semester 2023-2024\LAB802\79286_CC_APPSDEV22_1030_1230_PM_MW\79286-23222490\Desktop\Revise-main\PAMAYBAY.accdb";
         string connectionString = @"Provider = Microsoft.ACE.OLEDB.12.0; Data Source = C:\Users\Home\OneDrive\Desktop\Revise-main\PAMAYBAY.accdb";
         public SubjectScheduleForm()
         {
@@ -78,6 +78,16 @@ namespace ENROLLMENT_SYSTEM
                 if (found == false)
                     MessageBox.Show("Subject Code Not Found");
 
+                EDPCodeTextBox.Text = "";
+                SubjectCodeTextBox.Text = "";
+                DescriptionLabel.Text = "";
+                StartTimeDateTimePicker.Text = "00:00:00";
+                ExitTimeDateTimePicker.Text = "00:00:00";
+                AMPMComboBox.Text = "";
+                DaysTextBox.Text = "";
+                SectionTextBox.Text = "";
+                RoomTextBox.Text = "";
+                SchoolYearTextBox.Text = "";
             }
         }
 

@@ -17,7 +17,7 @@ namespace ENROLLMENT_SYSTEM
     public partial class EnrollmentEntry : Form
     {
         //string connectionString = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source = \\Server2\second semester 2023-2024\LAB802\79286_CC_APPSDEV22_1030_1230_PM_MW\79286-23222490\Desktop\FINAL FINALLY\finalsappdevsheesh-main\PAMAYBAY.accdb";
-        //string connectionString = @"Provider = Microsoft.ACE.OLEDB.12.0; Data Source = \\Server2\second semester 2023-2024\LAB802\79286_CC_APPSDEV22_1030_1230_PM_MW\79286-23222490\Desktop\Revise-main\PAMAYBAY.accdb";
+        //final DB string connectionString = @"Provider = Microsoft.ACE.OLEDB.12.0; Data Source = \\Server2\second semester 2023-2024\LAB802\79286_CC_APPSDEV22_1030_1230_PM_MW\79286-23222490\Desktop\Revise-main\PAMAYBAY.accdb";
         string connectionString = @"Provider = Microsoft.ACE.OLEDB.12.0; Data Source = C:\Users\Home\OneDrive\Desktop\Revise-main\PAMAYBAY.accdb";
         int totalunits = 0;
         public EnrollmentEntry()
@@ -75,7 +75,19 @@ namespace ENROLLMENT_SYSTEM
                 string end = string.Empty;
                 bool conflict = false;
                 bool closed = false;
+                bool duplicate = false;
                 int i = 0;
+
+                string enteredEDPCode = EDPCodeTextBox.Text.Trim().ToUpper();
+
+                foreach (DataGridViewRow row in SummaryDataGridView.Rows)
+                {
+                    if (row.Cells[0].Value != null && row.Cells[0].Value.ToString().Trim().ToUpper() == enteredEDPCode)
+                    {
+                        MessageBox.Show("Duplicated EDP. Please enter another");
+                        return;
+                    }
+                }
 
                 using (OleDbConnection thisConnection = new OleDbConnection(connectionString))
                 {
@@ -289,6 +301,18 @@ namespace ENROLLMENT_SYSTEM
             Menu mainMenu = new Menu();
             mainMenu.Show();
             this.Hide();
+        }
+
+        private void CancelButton_Click(object sender, EventArgs e)
+        {
+            IDNumberTextBox.Text = "";
+            NameLabel.Text = "";
+            CourseLabel.Text = "";
+            YearLabel.Text = "";
+            EDPCodeTextBox.Text = "";
+            UnitsLabel.Text = "";
+            SummaryDataGridView.Rows.Clear();
+
         }
     }
 }

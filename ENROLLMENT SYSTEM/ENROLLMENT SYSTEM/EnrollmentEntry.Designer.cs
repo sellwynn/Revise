@@ -55,6 +55,7 @@
             this.BackButton = new System.Windows.Forms.Button();
             this.label8 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
+            this.CancelButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.SummaryDataGridView)).BeginInit();
             this.SuspendLayout();
             // 
@@ -256,7 +257,7 @@
             this.SaveButton.Location = new System.Drawing.Point(323, 519);
             this.SaveButton.Margin = new System.Windows.Forms.Padding(2);
             this.SaveButton.Name = "SaveButton";
-            this.SaveButton.Size = new System.Drawing.Size(59, 27);
+            this.SaveButton.Size = new System.Drawing.Size(75, 27);
             this.SaveButton.TabIndex = 15;
             this.SaveButton.Text = "Save";
             this.SaveButton.UseVisualStyleBackColor = true;
@@ -302,6 +303,16 @@
             this.label9.TabIndex = 19;
             this.label9.Text = "Units: ";
             // 
+            // CancelButton
+            // 
+            this.CancelButton.Location = new System.Drawing.Point(403, 519);
+            this.CancelButton.Name = "CancelButton";
+            this.CancelButton.Size = new System.Drawing.Size(75, 27);
+            this.CancelButton.TabIndex = 20;
+            this.CancelButton.Text = "Cancel";
+            this.CancelButton.UseVisualStyleBackColor = true;
+            this.CancelButton.Click += new System.EventHandler(this.CancelButton_Click);
+            // 
             // EnrollmentEntry
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -310,6 +321,7 @@
             this.BackgroundImage = global::ENROLLMENT_SYSTEM.Properties.Resources._4e5ba68efc23bbf165eda5da16c06cf9;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(800, 557);
+            this.Controls.Add(this.CancelButton);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.BackButton);
             this.Controls.Add(this.UnitsLabel);
@@ -367,5 +379,6 @@
         private System.Windows.Forms.Button BackButton;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Button CancelButton;
     }
 }
