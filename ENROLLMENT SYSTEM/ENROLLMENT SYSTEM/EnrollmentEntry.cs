@@ -15,9 +15,10 @@ namespace ENROLLMENT_SYSTEM
 {
     public partial class EnrollmentEntry : Form
     {
-        
+
         //string connectionString = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source = \\Server2\second semester 2023-2024\LAB802\79286_CC_APPSDEV22_1030_1230_PM_MW\79286-23222490\Desktop\FINAL FINALLY\finalsappdevsheesh-main\PAMAYBAY.accdb";
-        string connectionString = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\Users\harle\Desktop\finalsappdevsheesh-main\PAMAYBAY.accdb";
+        //string connectionString = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\Users\harle\Desktop\finalsappdevsheesh-main\PAMAYBAY.accdb";
+        string connectionString = @"Provider = Microsoft.ACE.OLEDB.12.0; Data Source = \\Server2\second semester 2023-2024\LAB802\79286_CC_APPSDEV22_1030_1230_PM_MW\79286-23222490\Desktop\Revise-main\PAMAYBAY.accdb";
         int totalunits = 0;
         public EnrollmentEntry()
         {
@@ -102,7 +103,7 @@ namespace ENROLLMENT_SYSTEM
                     {
                         string daysInDataGrid = SummaryDataGridView.Rows[i + 1].Cells[4].Value.ToString().ToUpper();
 
-                        if (IsConflict(days, daysInDataGrid))
+                        if (IsConflict(days.ToUpper(), daysInDataGrid))
                         {
                             conflict = true;
                             break;
@@ -149,11 +150,9 @@ namespace ENROLLMENT_SYSTEM
 
                 if (!conflict && !closed)
                 {
-                    if (SummaryDataGridView.Rows[0].Cells[0].Value != null)
-                        SummaryDataGridView.Rows.Insert(0, new object[] { });
-
                     using (OleDbConnection thisConnection = new OleDbConnection(connectionString))
                     {
+                        bool edp = false;
                         thisConnection.Open();
                         OleDbCommand thisCommand = thisConnection.CreateCommand();
 
@@ -164,6 +163,9 @@ namespace ENROLLMENT_SYSTEM
                             {
                                 if (thisDataReader["SSFEDPCODE"].ToString().Trim().ToUpper() == EDPCodeTextBox.Text.Trim().ToUpper())
                                 {
+                                    edp = true;
+                                    if (SummaryDataGridView.Rows[0].Cells[0].Value != null)
+                                        SummaryDataGridView.Rows.Insert(0, new object[] { });
                                     DateTime startTime = DateTime.Parse(thisDataReader["SSFSTARTTIME"].ToString());
                                     DateTime endTime = DateTime.Parse(thisDataReader["SSFENDTIME"].ToString());
 
@@ -176,6 +178,12 @@ namespace ENROLLMENT_SYSTEM
                                     break;
                                 }
                             }
+                        }
+
+                        if (!edp)
+                        {
+                            MessageBox.Show("EDP Code Not Found!");
+                            return;
                         }
 
                         thisCommand.CommandText = "SELECT * FROM SUBJECTFILE";
@@ -231,13 +239,6 @@ namespace ENROLLMENT_SYSTEM
                    (daysInDataGrid == "FS" && (days == "FRI" || days == "SAT"));
         }
 
-
-        public void ActiveInactive()
-        {
-           
-        
-        }
-
         private void SaveButton_Click(object sender, EventArgs e)
         {
             if(IDNumberTextBox.Text != string.Empty)
@@ -261,7 +262,7 @@ namespace ENROLLMENT_SYSTEM
                 thisDataSet.Tables["EnrollmentHeaderFile"].Rows.Add(thisRow);
                 thisAdapter.Update(thisDataSet, "EnrollmentHeaderFile");
 
-                for(int i = 0; i < SummaryDataGridView.Rows.Count - 1; i++)
+                for(int i = 0; i < SummaryDataGridView.Rows.Count; i++)
                 {
                     thisConnection = new OleDbConnection(connectionString);
                     Ole = "Select * From ENROLLMENTDETAILFILE";
@@ -287,16 +288,11 @@ namespace ENROLLMENT_SYSTEM
                 MessageBox.Show("ID Number is empty.");
             }
         }
-
-        
-
         private void BackButton_Click(object sender, EventArgs e)
         {
             Menu mainMenu = new Menu();
             mainMenu.Show();
             this.Hide();
         }
-
-       
     }
 }

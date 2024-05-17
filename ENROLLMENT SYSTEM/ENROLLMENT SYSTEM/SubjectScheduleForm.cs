@@ -13,9 +13,10 @@ namespace ENROLLMENT_SYSTEM
 {
     public partial class SubjectScheduleForm : Form
     {
-        //string connectionString = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\Users\arjay\Documents\Github\finalsappdevsheesh\PAMAYBAY.accdb";
-       string connectionString = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\Users\harle\Desktop\finalsappdevsheesh-main\PAMAYBAY.accdb";
+
+        //string connectionString = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\Users\harle\Desktop\finalsappdevsheesh-main\PAMAYBAY.accdb";
         //string connectionString = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=\\Server2\second semester 2023-2024\LAB802\79286_CC_APPSDEV22_1030_1230_PM_MW\79286-23222490\Desktop\FINAL\PAMAYBAY.accdb";
+        string connectionString = @"Provider = Microsoft.ACE.OLEDB.12.0; Data Source = \\Server2\second semester 2023-2024\LAB802\79286_CC_APPSDEV22_1030_1230_PM_MW\79286-23222490\Desktop\Revise-main\PAMAYBAY.accdb";
         public SubjectScheduleForm()
         {
             InitializeComponent();
@@ -40,7 +41,7 @@ namespace ENROLLMENT_SYSTEM
             thisRow["SSFXM"] = AMPMComboBox.Text;
             thisRow["SSFSCHOOLYEAR"] = SchoolYearTextBox.Text;
             thisRow["SSFSECTION"] = SectionTextBox.Text;
-            thisRow["SSFMAXSIZE"] = 5;
+            thisRow["SSFMAXSIZE"] = 50;
             thisRow["SSFCLASSSIZE"] = 0;
 
             thisDataSet.Tables["SubjectScheduleFile"].Rows.Add(thisRow);
@@ -85,9 +86,9 @@ namespace ENROLLMENT_SYSTEM
             EDPCodeTextBox.Text = "";
             SubjectCodeTextBox.Text = "";
             DescriptionLabel.Text = "";
-            StartTimeDateTimePicker.Enabled = false;
-            ExitTimeDateTimePicker.Enabled = false;
-            AMPMComboBox.Enabled = false;
+            StartTimeDateTimePicker.Text = "00:00:00";
+            ExitTimeDateTimePicker.Text = "00:00:00";
+            AMPMComboBox.Text = "";
             DaysTextBox.Text = "";
             SectionTextBox.Text = "";
             RoomTextBox.Text = "";
