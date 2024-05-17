@@ -10,12 +10,12 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.AxHost;
 
 namespace ENROLLMENT_SYSTEM
 {
     public partial class EnrollmentEntry : Form
     {
-
         //string connectionString = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source = \\Server2\second semester 2023-2024\LAB802\79286_CC_APPSDEV22_1030_1230_PM_MW\79286-23222490\Desktop\FINAL FINALLY\finalsappdevsheesh-main\PAMAYBAY.accdb";
         //string connectionString = @"Provider = Microsoft.ACE.OLEDB.12.0; Data Source = \\Server2\second semester 2023-2024\LAB802\79286_CC_APPSDEV22_1030_1230_PM_MW\79286-23222490\Desktop\Revise-main\PAMAYBAY.accdb";
         string connectionString = @"Provider = Microsoft.ACE.OLEDB.12.0; Data Source = C:\Users\Home\OneDrive\Desktop\Revise-main\PAMAYBAY.accdb";
@@ -104,8 +104,7 @@ namespace ENROLLMENT_SYSTEM
                         string daysInDataGrid = SummaryDataGridView.Rows[i + 1].Cells[4].Value.ToString().ToUpper();
                         string startInDataGrid = SummaryDataGridView.Rows[i + 1].Cells[2].Value.ToString();
                         string endInDataGrid = SummaryDataGridView.Rows[i + 1].Cells[3].Value.ToString();
-
-                        if (IsConflict(days.ToUpper(), daysInDataGrid) &&
+                        if (IsConflict(days.ToUpper(), daysInDataGrid.ToUpper()) &&
                             IsTimeConflict(DateTime.Parse(start), DateTime.Parse(end), DateTime.Parse(startInDataGrid), DateTime.Parse(endInDataGrid)))
                         {
                             conflict = true;
@@ -199,7 +198,11 @@ namespace ENROLLMENT_SYSTEM
 
         private bool IsTimeConflict(DateTime start1, DateTime end1, DateTime start2, DateTime end2)
         {
-            return start1 < end2 && end1 > start2;
+            TimeSpan start = DateTime.Parse(start1.ToString("hh:mm tt")).TimeOfDay;
+            TimeSpan start_ = DateTime.Parse(start2.ToString("hh:mm tt")).TimeOfDay;
+            TimeSpan end = DateTime.Parse(end1.ToString("hh:mm tt")).TimeOfDay;
+            TimeSpan end_ = DateTime.Parse(end2.ToString("hh:mm tt")).TimeOfDay;
+            return start < end_ && end > start_ || start == start_ && end == end_;
         }
 
         private void UpdateTotalUnits()
